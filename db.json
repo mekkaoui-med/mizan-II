@@ -1,0 +1,30 @@
+
+{
+  "articles": [
+    {
+      "id": "1",
+      "title": "Gold Ring",
+      "description": "18-karat gold ring",
+      "price": 2500,
+      "status": "available",
+      "createdAt": "2026-11-16"
+    },
+    {
+      "id": "2",
+      "title": "Silver Necklace",
+      "description": "925 sterling silver necklace",
+      "price": 800,
+      "status": "reserved",
+      "createdAt": "2026-11-15"
+    },
+    {
+      "id": "3",
+      "title": "Gold Bracelet",
+      "description": "Traditional 18-karat gold bracelet",
+      "price": 4200,
+      "status": "sold",
+      "createdAt": "2026-11-14"
+    }
+  ],
+  "names":[]
+}
