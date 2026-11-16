@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>Mizan</title>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <div class="logo">GOLD<span>.</span>PRICER</div>
+
+        <div>
+          <p id="responseState"></p>
+        </div>
+        <div class="currency-container">
+          <label for="currency-select">Devise :</label>
+          <select id="currency-select">
+            <option value="MAD">MAD</option>
+            <option value="USD">USD</option>
+            <option value="EUR">EUR</option>
+          </select>
+        </div>
+        <div id="date"></div>
+      </header>
+      <main>
+        <section>
+          <h2 class="sectionTitle">Prix du Marcher</h2>
+          <div class="prices"></div>
+        </section>
+        
+        <article class="estimator-section">
+          <h2 class="estim-title">Estimateur de bijoux</h2>
+          <div id="estimate-container">
+            <div>
+              <input
+                type="number"
+                id="input-gold-argent"
+                placeholder="Saisissez un poids (en g)"
+                step="any"
+              />
+              <!-- Message d'erreur sous le champ -->
+              <p id="weight-error"></p>
+            </div>
+            <div id="slect-section">
+              <select name="" id="select-metal">
+                <option value="gold">Or (24 Carats)</option>
+                <option value="argent">Argent (Pur)</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Affichage du résultat de l'estimation -->
+          <div id="estimate-result-box">
+            Valeur estimée : <strong id="estimate-result">--</strong>
+            <span id="estimate-currency">MAD</span>
+          </div>
+        </article>
+      </main>
+    </div>
+    <script src="app.js" type="module"></script>
+  </body>
+</html>
