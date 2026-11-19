@@ -1,113 +1,152 @@
 import { request } from "./api.js";
+import {
+  validateTitle,
+  validateDescription,
+  validatePrice,
+} from "./validation.js";
 
 const articleContainer = document.getElementById("articles-container");
 const searchInput = document.getElementById("search-input");
 const statusFilter = document.getElementById("status-filter");
-const sortFiltered = document.getElementById("sort-filter")
+const sortFiltered = document.getElementById("sort-filter");
+
+const ajoutBotton = document.getElementById("ajout-button");
+const PostForm = document.getElementById("form-section");
+const ajoutForm = document.getElementById("ajout-form");
+
+const titleError = document.getElementById("titel-error");
+const descError = document.getElementById("description-error");
+const prixError = document.getElementById("prix-error");
+
+const titleInpue = document.getElementById("article-title");
+const descriptionInput = document.getElementById("article-description");
+const prixInput = document.getElementById("article-price");
+
 let articleData = [];
 
-async function getArticles(){
-    try{
-        articleData = await request("/articles")
+async function getArticles() {
+  try {
+    articleData = await request("/articles");
 
-        displayArticles(articleData)
-        
+    displayArticles(articleData);
+  } catch (error) {
+    console.log(error.message);
+  }
+}
 
+function displayArticles(articles) {
+  articleContainer.innerHTML = "";
 
-    }catch(error){
-        console.log(error.message)
+  articles.forEach((article) => {
+    const articleCarrd = document.createElement("div");
+    articleCarrd.className = "card";
+
+    const title = document.createElement("h3");
+    title.textContent = article.title;
+    title.className = "card-title";
+
+    const description = document.createElement("p");
+    description.textContent = article.description;
+    description.className = "card-description";
+
+    const price = document.createElement("p");
+    price.textContent = ` prix :${article.price} MAD`;
+    price.className = "card-price";
+
+    const status = document.createElement("p");
+
+    status.textContent = article.status;
+    status.className = "card-status";
+
+    const articleStatus = article.status;
+    switch (articleStatus) {
+      case "available":
+        status.classList.add("positive");
+        break;
+      case "sold":
+        status.classList.add("negative");
+        break;
+      case "reserved":
+        status.classList.add("reserved");
+        break;
+      default:
+        status.classList.add("positive");
     }
+
+    articleCarrd.append(title, description, price, status);
+
+    articleContainer.appendChild(articleCarrd);
+  });
 }
 
-function displayArticles(articles){
+function searchArticles() {
+  const searchValue = searchInput.value.toLowerCase();
+  const selectedStatus = statusFilter.value;
+  const selectedSoort = sortFiltered.value;
 
-    articleContainer.innerHTML = "";
+  const viltredArticles = articleData.filter((article) => {
+    const matchSearch = article.title.toLowerCase().includes(searchValue);
 
-    articles.forEach(article => {
-            const articleCarrd = document.createElement("div");
-            articleCarrd.className = "card";
+    const matchStatus =
+      selectedStatus === "all" || article.status === selectedStatus;
 
-            const title = document.createElement("h3")
-            title.textContent = article.title;
-            title.className = "card-title"
+    return matchStatus && matchSearch;
+  });
 
-            const description = document.createElement("p")
-            description.textContent = article.description;
-            description.className = "card-description"
+  viltredArticles.sort((a, b) => {
+    switch (selectedSoort) {
+      case "title":
+        return a.title.localCompare(b.title);
+      case "price-asc":
+        return a.price - b.price;
+      case "price-desc":
+        return b.price - a.price;
+      case "date":
+        return new Date(b.createdAt) - new Date(a.createdAt);
+      default:
+        return 0;
+    }
+  });
 
-            const price = document.createElement("p")
-            price.textContent = ` prix :${article.price} MAD`;
-            price.className = "card-price"
-
-            const status = document.createElement("p")
-
-            status.textContent = article.status
-            status.className = "card-status"
-
-            const articleStatus = article.status
-            switch(articleStatus){
-                case "available":
-                    status.classList.add("positive")
-                    break;
-                case "sold":
-                    status.classList.add("negative")
-                    break;
-                case "reserved" :
-                    status.classList.add("reserved")
-                    break;
-                default:
-                    status.classList.add("positive")
-            }
-
-
-            articleCarrd.append(title,description,price,status)
-            
-            articleContainer.appendChild(articleCarrd)
-
-        });
+  displayArticles(viltredArticles);
 }
+// function desplayPostForm(){
+//     PostForm.innerHTML = "";
 
-function searchArticles(){
-    const searchValue = searchInput.value.toLowerCase();
-    const selectedStatus = statusFilter.value;
-    const selectedSoort  = sortFiltered.value;
+// }
 
-    const viltredArticles = articleData.filter((article)=>{
-        const matchSearch = article.title.toLowerCase().includes(searchValue);
+searchInput.addEventListener("input", searchArticles);
+statusFilter.addEventListener("change", searchArticles);
+sortFiltered.addEventListener("change", searchArticles);
 
-        const matchStatus = selectedStatus === "all" || article.status === selectedStatus;
+ajoutBotton.addEventListener("click", function () {
+  PostForm.classList.remove("hidden");
+});
 
-        return matchStatus && matchSearch;
-    });
+ajoutForm.addEventListener("submit", (event) => {
+  event.preventDefault();
+  console.log("Form submitted!");
+  titleError.classList.add("hidden");
+  descError.classList.add("hidden");
+  prixError.classList.add("hidden");
 
-    viltredArticles.sort((a,b) =>{
-        switch(selectedSoort){
-            case "title" :
-                return a.title.localCompare(b.title);
-            case "price-asc":
-                return a.price - b.price;
-            case "price-desc" :
-                return b.price - a.price;
-            case "date":
-                return new Date(b.createdAt) - new Date(a.createdAt)
-            default:
-                return 0;
-        }
-    })
-
-    displayArticles(viltredArticles)
-}
-
-
-
-searchInput.addEventListener("input", searchArticles)
-statusFilter.addEventListener("change", searchArticles)
-sortFiltered.addEventListener("change", searchArticles)
-
+  const title = titleInpue.value.trim().toLowerCase();
+  const description = descriptionInput.value.toLowerCase();
+  const prix = prixInput.value;
+  if (!validateTitle(title)) {
+    titleError.classList.remove("hidden");
+  }
+  if (!validateDescription(description)) {
+    descError.classList.remove("hidden");
+  }
+  if (!validatePrice(prix)) {
+    prixError.classList.remove("hidden");
+  }
+});
 
 async function getArticlesById(id) {
-    const article = await request(`/articles/${id}`)
-    console.log(article)
+  const article = await request(`/articles/${id}`);
+  console.log(article);
 }
 
 // getArticlesById()
