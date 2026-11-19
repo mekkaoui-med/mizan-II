@@ -83,13 +83,15 @@ function searchArticles(){
     viltredArticles.sort((a,b) =>{
         switch(selectedSoort){
             case "title" :
-                return a.title.toLocalCompare(b.title);
+                return a.title.localCompare(b.title);
             case "price-asc":
                 return a.price - b.price;
             case "price-desc" :
                 return b.price - a.price;
             case "date":
                 return new Date(b.createdAt) - new Date(a.createdAt)
+            default:
+                return 0;
         }
     })
 
@@ -108,5 +110,5 @@ async function getArticlesById(id) {
     console.log(article)
 }
 
-getArticlesById(1)
+// getArticlesById()
 getArticles();
