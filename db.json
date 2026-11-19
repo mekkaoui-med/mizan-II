@@ -1,4 +1,3 @@
-
 {
   "articles": [
     {
@@ -24,6 +23,42 @@
       "price": 4200,
       "status": "sold",
       "createdAt": "2026-11-14"
+    },
+    {
+      "id": "4",
+      "title": "Diamond Ring",
+      "description": "18-karat white gold ring with diamond",
+      "price": 6500,
+      "status": "available",
+      "createdAt": "2026-11-13"
+    },
+    {
+      "id": "5",
+      "title": "Silver Bracelet",
+      "description": "925 sterling  silver bracelet",
+      "price": 1200,
+      "status": "reserved",
+      "createdAt": "2026-11-12"
+    },
+    {
+      "id": "6",
+      "title": "Gold Earrings",
+      "description": "18-karat gold hoop earrings",
+      "price": 1800,
+      "status": "available",
+      "createdAt": "2026-11-11"
+    },
+    {
+      "id": "7",
+      "title": "Gold Necklace",
+      "description": "Traditional 18-karat gold necklace",
+      "price": 5500,
+      "status": "sold",
+      "createdAt": "2026-11-10"
     }
+    
+  ],
+  "name":[
+    {"name" : "najib"}
   ]
 }
