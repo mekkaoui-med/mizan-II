@@ -21,6 +21,7 @@ const prixError = document.getElementById("prix-error");
 const titleInpue = document.getElementById("article-title");
 const descriptionInput = document.getElementById("article-description");
 const prixInput = document.getElementById("article-price");
+const doneAjout = document.getElementById("ajout-done")
 
 let articleData = [];
 
@@ -123,24 +124,53 @@ ajoutBotton.addEventListener("click", function () {
   PostForm.classList.remove("hidden");
 });
 
-ajoutForm.addEventListener("submit", (event) => {
+ajoutForm.addEventListener("submit",  async (event) => {
   event.preventDefault();
-  console.log("Form submitted!");
   titleError.classList.add("hidden");
   descError.classList.add("hidden");
   prixError.classList.add("hidden");
 
   const title = titleInpue.value.trim().toLowerCase();
   const description = descriptionInput.value.toLowerCase();
-  const prix = prixInput.value;
+  const prix = Number(prixInput.value);
+  let dataIsValide = true;
   if (!validateTitle(title)) {
     titleError.classList.remove("hidden");
+    dataIsValide = false;
   }
   if (!validateDescription(description)) {
     descError.classList.remove("hidden");
+    dataIsValide = false;
   }
   if (!validatePrice(prix)) {
     prixError.classList.remove("hidden");
+    dataIsValide = false;
+  }
+      console.log("3 - Validation passed");
+
+  if(!dataIsValide) return;
+
+  const article = {
+    title:title,
+    description:description,
+    price:prix,
+    status:"available",
+    createdAt: new Date()
+  }
+  try{
+    const response = await request("/articles",{
+        method:"POST",
+        headers: {
+            "Content-Type":"application/json"
+        },
+        body:JSON.stringify(article)
+    })
+    doneAjout.disabled = true;
+    doneAjout.classList.remove("hidden")
+    doneAjout.classList.add("positive")
+    
+  }catch(error){
+    console.error(error)
   }
 });
 

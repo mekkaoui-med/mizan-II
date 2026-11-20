@@ -56,9 +56,12 @@
       "status": "sold",
       "createdAt": "2026-11-10"
     }
-    
   ],
-  "name":[
-    {"name" : "najib"}
-  ]
+  "name": [
+    {
+      "name": "najib",
+      "id": "BuAfV6yRtO4"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
 }
