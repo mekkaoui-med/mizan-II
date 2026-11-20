@@ -9,7 +9,7 @@
   <body>
     <main>
       <h1 id="CatalogPageTitle" >AL Andalous catalogue</h1>
-      <button id="ajout-button">Ajouter Un Article (+)</button>
+      <button type="button" id="ajout-button">Ajouter Un Article (+)</button>
       <section id="form-section" class="hidden">
         <form id="ajout-form">
             <div class="box-inputs">
@@ -19,18 +19,19 @@
                 <input type="text" id="article-title" placeholder="ajoute un titre" class="ajoutInput">
             </div>
             <div class="box-inputs">
-                <label for="article-title">ajoute description :</label>
+                <label for="article-description">ajoute description :</label>
                 <p class=" hidden negative" id="description-error" >au moins 10 caractères</p>
                 <input type="" id="article-description" placeholder="ajoute un description" class="ajoutInput">
             </div>
             <div class="box-inputs">
-                <label for="article-title">ajout price :</label>
+                <label for="article-price">ajout price :</label>
                 <p class=" hidden negative" id="prix-error">un prix superieur a 0</p>
                 <input type="number" id="article-price" placeholder="ajoute un price" class="ajoutInput">
             </div>
-            <button type="submit">Ajoute(+)</button>
+            <button type="submit" id="ajout-btn">Ajoute(+)</button>
         </form>
       </section>
+      <p id="ajout-done" class="hidden ">Article ajouté avec succès</p>
       <input
         type="search"
         id="search-input"

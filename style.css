@@ -301,3 +301,30 @@ header {
 .box-inputs input  {
   width: 100%;
 }
+#ajout-btn{
+  margin-right: 10px;
+  width: 100px;
+  height: 25px;
+  font-size: 1rem;
+  border: 1px solid;
+  background-color: #efef84;
+  border-radius: 8px;
+  cursor: pointer;
+
+}
+#ajout-btn:hover{
+   outline: 1px solid rgb(137, 109, 15);
+    transform: scale(1);
+    margin-bottom: 15px;
+    cursor: pointer;
+}
+#ajout-btn:disabled{
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+#ajout-done{
+  text-align: center;
+  font-size: large;
+  font-family:Georgia, 'Times New Roman', Times, serif;
+  margin: 10px 10px;
+}
